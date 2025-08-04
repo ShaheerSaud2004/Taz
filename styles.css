@@ -5671,10 +5671,13 @@ html, body {
         color: var(--text-primary);
     }
     
-    /* Hide default logo on mobile */
-    .logo-display,
-    .logo-container,
-    .logo-image {
+    /* Hide specific logo elements on mobile ONLY (not nav logo) */
+    .product-showcase .logo-display,
+    .product-showcase .logo-container,
+    .product-showcase .logo-image,
+    .hero .logo-display,
+    .hero .logo-container,
+    .hero .logo-image {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
@@ -5685,18 +5688,21 @@ html, body {
         display: none !important;
     }
     
-    /* Force hide any logo-related content on mobile */
-    img[src*="logo"],
-    img[alt*="logo"],
-    img[src*="yourlogo"],
-    .logo,
-    .logo-wrapper,
-    .company-logo {
+    /* Hide placeholder logo images on mobile only */
+    img[src*="yourlogo"] {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
         width: 0 !important;
         height: 0 !important;
+    }
+    
+    /* Ensure nav logo is always visible */
+    .nav-logo,
+    .nav-logo h1 {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     /* Mobile About Section Fixes */
