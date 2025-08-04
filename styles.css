@@ -5538,6 +5538,66 @@ html, body {
         animation: none !important;
     }
     
+    /* Mobile Portfolio Section Stacking */
+    .portfolio {
+        padding: 3rem 0;
+    }
+    
+    .portfolio-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+        width: 100% !important;
+        grid-template-columns: none !important;
+        overflow: visible !important;
+    }
+    
+    .portfolio-item {
+        flex: none !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        transform: none !important;
+        opacity: 1 !important;
+        animation: none !important;
+    }
+    
+    .portfolio-item:hover {
+        transform: translateY(-2px) !important;
+    }
+    
+    .portfolio-image {
+        width: 100% !important;
+        height: 250px !important;
+        object-fit: cover !important;
+    }
+    
+    .portfolio-content {
+        padding: 2rem 1.5rem !important;
+    }
+    
+    .portfolio-content h3 {
+        font-size: 1.3rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .portfolio-content p {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .portfolio-stats {
+        flex-wrap: wrap !important;
+        gap: 0.8rem !important;
+    }
+    
+    .portfolio-stats span {
+        font-size: 0.9rem !important;
+        padding: 0.6rem 1rem !important;
+    }
+    
     /* Enhanced touch optimization */
     * {
         -webkit-tap-highlight-color: rgba(0, 212, 170, 0.3);
