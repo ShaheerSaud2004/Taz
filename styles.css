@@ -899,7 +899,6 @@ body::before {
     max-width: 100%;
     margin: 0 auto;
     overflow: hidden;
-    padding: 0 60px;
     animation: carouselGlow 3s ease-in-out infinite;
 }
 
@@ -954,76 +953,6 @@ body::before {
     }
 }
 
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 212, 170, 0.15);
-    border: 2px solid var(--accent-primary);
-    color: var(--accent-primary);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10;
-    backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-soft);
-    animation: buttonPulse 3s ease-in-out infinite;
-}
-
-@keyframes buttonPulse {
-    0%, 100% {
-        box-shadow: var(--shadow-soft), 0 0 0 0 rgba(0, 212, 170, 0.3);
-    }
-    50% {
-        box-shadow: var(--shadow-soft), 0 0 0 10px rgba(0, 212, 170, 0);
-    }
-}
-
-.carousel-btn:hover {
-    background: var(--accent-primary);
-    color: var(--bg-primary);
-    box-shadow: 0 0 20px rgba(0, 212, 170, 0.5);
-}
-
-.prev-btn {
-    left: -25px;
-}
-
-.next-btn {
-    right: -25px;
-}
-
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-}
-
-.dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--border-light);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.dot.active {
-    background: var(--accent-primary);
-    transform: scale(1.2);
-    box-shadow: 0 0 10px rgba(0, 212, 170, 0.5);
-}
-
-.dot:hover {
-    background: var(--accent-secondary);
-    transform: scale(1.1);
-}
-
 /* Carousel animation enhancements */
 .service-card {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1036,36 +965,6 @@ body::before {
 .service-card.active {
     filter: grayscale(0);
     box-shadow: 0 20px 40px rgba(0, 212, 170, 0.15);
-}
-
-/* Carousel progress indicator */
-.carousel-progress {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 4px;
-    background: var(--border-light);
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.carousel-progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    border-radius: 2px;
-    transition: width 0.3s ease;
-    animation: progressPulse 2s ease-in-out infinite;
-}
-
-@keyframes progressPulse {
-    0%, 100% {
-        opacity: 0.8;
-    }
-    50% {
-        opacity: 1;
-    }
 }
 
 .service-card {
@@ -2270,23 +2169,7 @@ body::before {
     }
     
     /* Carousel Mobile Styles */
-    .services-carousel {
-        padding: 0 40px;
-    }
-    
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-    
-    .prev-btn {
-        left: -20px;
-    }
-    
-    .next-btn {
-        right: -20px;
-    }
+
     
     .service-card {
         flex: 0 0 280px;

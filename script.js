@@ -571,7 +571,6 @@ let carouselPosition = 0;
 let carouselSpeed = 0.8; // pixels per frame - adjust this to control speed
 let animationId;
 const slides = document.querySelectorAll('.service-card');
-const dots = document.querySelectorAll('.dot');
 const totalSlides = slides.length;
 
 function startContinuousCarousel() {
@@ -603,24 +602,11 @@ function startContinuousCarousel() {
 }
 
 function updateActiveStates(index) {
-    // Remove active class from all slides and dots
+    // Remove active class from all slides
     slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
     
-    // Add active class to current slide and dot
+    // Add active class to current slide
     if (slides[index]) slides[index].classList.add('active');
-    if (dots[index]) dots[index].classList.add('active');
-    
-    // Update progress bar
-    updateProgressBar(index);
-}
-
-function updateProgressBar(index) {
-    const progressBar = document.getElementById('carousel-progress');
-    if (progressBar) {
-        const progress = ((index + 1) / totalSlides) * 100;
-        progressBar.style.width = `${progress}%`;
-    }
 }
 
 function stopContinuousCarousel() {
@@ -629,81 +615,17 @@ function stopContinuousCarousel() {
     }
 }
 
-// Manual navigation functions (for buttons and dots)
-function moveCarousel(direction) {
-    const slideWidth = slides[0].offsetWidth + 32;
-    carouselPosition -= direction * slideWidth;
-    
-    // Update active states immediately
-    const currentSlideIndex = Math.abs(Math.round(carouselPosition / slideWidth)) % totalSlides;
-    updateActiveStates(currentSlideIndex);
-}
-
-function currentSlide(slideIndex) {
-    const slideWidth = slides[0].offsetWidth + 32;
-    carouselPosition = -(slideIndex - 1) * slideWidth;
-    
-    // Update active states immediately
-    updateActiveStates(slideIndex - 1);
-}
-
 // Initialize carousel when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Start continuous carousel
     startContinuousCarousel();
     
-    // Pause continuous carousel on hover and focus
+    // Pause continuous carousel on hover
     const servicesCarousel = document.querySelector('.services-carousel');
     if (servicesCarousel) {
         servicesCarousel.addEventListener('mouseenter', stopContinuousCarousel);
         servicesCarousel.addEventListener('mouseleave', startContinuousCarousel);
-        servicesCarousel.addEventListener('focusin', stopContinuousCarousel);
-        servicesCarousel.addEventListener('focusout', startContinuousCarousel);
     }
-    
-    // Add touch/swipe support for mobile
-    let startX = 0;
-    let endX = 0;
-    
-    servicesCarousel.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-    });
-    
-    servicesCarousel.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
-        handleSwipe();
-    });
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = startX - endX;
-        
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Swipe left - next slide
-                moveCarousel(1);
-            } else {
-                // Swipe right - previous slide
-                moveCarousel(-1);
-            }
-        }
-    }
-    
-    // Add accessibility features
-    const carouselButtons = document.querySelectorAll('.carousel-btn');
-    carouselButtons.forEach(button => {
-        button.setAttribute('aria-label', button.classList.contains('prev-btn') ? 'Previous slide' : 'Next slide');
-        button.setAttribute('tabindex', '0');
-    });
-    
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, index) => {
-        dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
-        dot.setAttribute('tabindex', '0');
-    });
-    
-    // Initialize progress bar
-    updateProgressBar(0);
 });
 
 // Enhanced loading animation for the page
@@ -795,13 +717,6 @@ document.addEventListener('keydown', (e) => {
         // Close mobile menu
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
-    }
-    
-    // Carousel keyboard navigation
-    if (e.key === 'ArrowLeft') {
-        moveCarousel(-1);
-    } else if (e.key === 'ArrowRight') {
-        moveCarousel(1);
     }
 });
 
