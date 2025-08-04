@@ -706,14 +706,30 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgressBar(0);
 });
 
-// Loading animation for the page
+// Enhanced loading animation for the page
 window.addEventListener('load', () => {
     document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.8s ease';
+    document.body.style.transition = 'opacity 1.2s ease';
+    
+    // Add loading screen
+    const loadingScreen = document.createElement('div');
+    loadingScreen.id = 'loading-screen';
+    loadingScreen.innerHTML = `
+        <div class="loading-content">
+            <div class="loading-logo">TreeScent Pro</div>
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading your experience...</div>
+        </div>
+    `;
+    document.body.appendChild(loadingScreen);
     
     setTimeout(() => {
         document.body.style.opacity = '1';
-    }, 100);
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => {
+            loadingScreen.remove();
+        }, 500);
+    }, 800);
 });
 
 // Add smooth reveal animation for sections
