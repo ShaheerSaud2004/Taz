@@ -607,6 +607,11 @@ let slides = document.querySelectorAll('.service-card');
 let totalSlides = slides.length;
 
 function setupInfiniteCarousel() {
+    // Disable carousel on mobile devices
+    if (window.innerWidth <= 768) {
+        return;
+    }
+    
     const servicesGrid = document.querySelector('.services-grid');
     if (!servicesGrid) return;
     
@@ -622,6 +627,16 @@ function setupInfiniteCarousel() {
 }
 
 function startContinuousCarousel() {
+    // Disable carousel on mobile devices
+    if (window.innerWidth <= 768) {
+        // Make all service cards visible on mobile
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+            card.classList.add('active');
+        });
+        return;
+    }
+    
     function animate() {
         carouselPosition -= carouselSpeed;
         
@@ -986,4 +1001,37 @@ window.addEventListener('scroll', () => {
         requestAnimationFrame(updateParallax);
         ticking = true;
     }
+});
+
+// Handle window resize for mobile/desktop transitions
+window.addEventListener('resize', () => {
+    // Debounce resize events
+    clearTimeout(window.resizeTimeout);
+    window.resizeTimeout = setTimeout(() => {
+        // Reset carousel on resize
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+        }
+        
+        // Remove cloned elements if they exist
+        const clonedCards = document.querySelectorAll('.service-card:nth-child(n+5)');
+        clonedCards.forEach(card => card.remove());
+        
+        // Reset carousel position and variables
+        carouselPosition = 0;
+        slides = document.querySelectorAll('.service-card');
+        totalSlides = slides.length;
+        
+        // Reset transforms
+        const servicesGrid = document.querySelector('.services-grid');
+        if (servicesGrid) {
+            servicesGrid.style.transform = '';
+        }
+        
+        // Restart carousel setup based on new screen size
+        setTimeout(() => {
+            setupInfiniteCarousel();
+            startContinuousCarousel();
+        }, 100);
+    }, 250);
 }); 
