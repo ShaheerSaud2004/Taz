@@ -5415,8 +5415,31 @@ html, body {
     }
     
     /* Hide default logo on mobile */
-    .logo-display {
-        display: none;
+    .logo-display,
+    .logo-container,
+    .logo-image {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+    
+    /* Ensure product showcase only shows mobile content */
+    .product-showcase > *:not(.mobile-hero-content):not(.floating-elements) {
+        display: none !important;
+    }
+    
+    /* Force hide any logo-related content on mobile */
+    img[src*="logo"],
+    img[alt*="logo"],
+    img[src*="yourlogo"],
+    .logo,
+    .logo-wrapper,
+    .company-logo {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
     }
     
     /* Mobile About Section Fixes */
