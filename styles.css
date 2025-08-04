@@ -4179,6 +4179,17 @@ html, body {
     .container {
         max-width: 100%;
         padding: 0 1.5rem;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+    
+    /* Ensure no overflow on mobile */
+    body {
+        overflow-x: hidden;
+    }
+    
+    * {
+        box-sizing: border-box;
     }
     
     /* Enhanced Navigation optimization */
@@ -5405,6 +5416,65 @@ html, body {
     
     /* Hide default logo on mobile */
     .logo-display {
+        display: none;
+    }
+    
+    /* Mobile About Section Fixes */
+    .about {
+        padding: 3rem 0;
+        overflow: hidden;
+    }
+    
+    .about-content {
+        display: block !important;
+        grid-template-columns: none !important;
+        gap: 2rem !important;
+    }
+    
+    .about-text {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .about-lead {
+        font-size: 1.1rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 1.5rem !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        max-width: 100%;
+    }
+    
+    .about-text p {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1.5rem !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        max-width: 100%;
+        text-align: left;
+    }
+    
+    .about-features {
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+        margin-top: 2rem !important;
+        overflow-x: visible !important;
+        padding-bottom: 0 !important;
+    }
+    
+    .about-feature {
+        flex: none !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        padding: 2rem 1.5rem !important;
+        margin: 0 !important;
+    }
+    
+    .about-image {
         display: none;
     }
     
