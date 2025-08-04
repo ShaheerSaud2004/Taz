@@ -341,28 +341,58 @@ function showNotification(message, type = 'info') {
     }, 4000);
 }
 
-// Particle effects for hero section
+// Enhanced particle effects for hero section
 function initParticleEffects() {
     const hero = document.querySelector('.hero');
     if (!hero) return;
     
-    for (let i = 0; i < 20; i++) {
+    // Create more particles with different sizes and colors
+    for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
+        const size = Math.random() * 4 + 1;
+        const colors = ['#00d4aa', '#00b894', '#00ff88', '#00ffaa'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
         particle.style.cssText = `
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--accent-primary);
+            width: ${size}px;
+            height: ${size}px;
+            background: ${color};
             border-radius: 50%;
-            opacity: 0.3;
+            opacity: ${0.2 + Math.random() * 0.4};
             pointer-events: none;
-            animation: float-particle ${3 + Math.random() * 4}s ease-in-out infinite;
+            animation: float-particle ${4 + Math.random() * 6}s ease-in-out infinite;
             left: ${Math.random() * 100}%;
             top: ${Math.random() * 100}%;
-            animation-delay: ${Math.random() * 2}s;
+            animation-delay: ${Math.random() * 3}s;
+            box-shadow: 0 0 ${size * 2}px ${color};
         `;
         hero.appendChild(particle);
+    }
+    
+    // Add floating geometric shapes
+    for (let i = 0; i < 8; i++) {
+        const shape = document.createElement('div');
+        shape.className = 'floating-shape';
+        const size = Math.random() * 20 + 10;
+        const rotation = Math.random() * 360;
+        
+        shape.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+            opacity: 0.1;
+            pointer-events: none;
+            animation: float-shape ${8 + Math.random() * 4}s ease-in-out infinite;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            animation-delay: ${Math.random() * 4}s;
+            transform: rotate(${rotation}deg);
+        `;
+        hero.appendChild(shape);
     }
 }
 
@@ -429,6 +459,25 @@ style.textContent = `
         50% {
             transform: translateY(-20px) translateX(10px);
             opacity: 0.6;
+        }
+    }
+    
+    @keyframes float-shape {
+        0%, 100% {
+            transform: translateY(0px) translateX(0px) rotate(0deg);
+            opacity: 0.1;
+        }
+        25% {
+            transform: translateY(-15px) translateX(5px) rotate(90deg);
+            opacity: 0.2;
+        }
+        50% {
+            transform: translateY(-25px) translateX(-5px) rotate(180deg);
+            opacity: 0.15;
+        }
+        75% {
+            transform: translateY(-10px) translateX(10px) rotate(270deg);
+            opacity: 0.25;
         }
     }
     
