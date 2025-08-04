@@ -4437,28 +4437,44 @@ html, body {
     /* Hero section optimization */
     .hero {
         min-height: 100vh;
+        min-height: 100svh; /* Use small viewport height for mobile */
         padding: 1rem 0;
-        margin-top: -2rem;
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .hero-container {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
         text-align: center;
-        padding: 1rem 0;
+        padding: 1rem;
+        max-width: 100%;
+        margin: 0 auto;
+        min-height: auto;
     }
     
     .hero-title {
-        font-size: 2.5rem;
-        line-height: 1.2;
+        font-size: 2.2rem;
+        line-height: 1.1;
         margin-bottom: 1rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        padding: 0 0.5rem;
     }
     
     .hero-description {
-        font-size: 1.1rem;
-        line-height: 1.6;
+        font-size: 1rem;
+        line-height: 1.5;
         margin-bottom: 1.5rem;
         padding: 0 1rem;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .hero-stats {
@@ -5429,8 +5445,127 @@ html, body {
     opacity: 0.8;
 }
 
-/* ===== CRITICAL MOBILE OVERRIDES ===== */
+/* ===== COMPREHENSIVE MOBILE OPTIMIZATION ===== */
 @media (max-width: 768px) {
+    /* Mobile-First Base Optimizations */
+    html {
+        font-size: 16px; /* Ensure readable font size */
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        font-feature-settings: "kern" 1;
+        font-kerning: normal;
+        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        line-height: 1.6;
+        font-weight: 400;
+    }
+    
+    /* Mobile Typography Optimization */
+    h1, h2, h3, h4, h5, h6 {
+        line-height: 1.2 !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+    }
+    
+    p, li, span {
+        line-height: 1.6 !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        text-align: left;
+        margin-bottom: 1rem;
+    }
+    
+    /* Enhanced touch optimization */
+    * {
+        -webkit-tap-highlight-color: rgba(0, 212, 170, 0.3);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+        box-sizing: border-box;
+    }
+    
+    /* Allow text selection for content */
+    p, h1, h2, h3, h4, h5, h6, span, li, input, textarea {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+    }
+    
+    /* Optimized touch targets - 44px minimum */
+    button, .btn, .nav-link, .hamburger, a, input, textarea, select {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+        cursor: pointer;
+    }
+    
+    /* Prevent zoom on input focus */
+    input, textarea, select {
+        font-size: 16px !important;
+        transform: translateZ(0);
+        -webkit-appearance: none;
+        border-radius: var(--radius-md);
+    }
+    
+    /* Mobile Performance & Image Optimization */
+    img, video {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+        will-change: transform;
+        loading: lazy;
+        decoding: async;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    /* Disable heavy animations on mobile for performance */
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Re-enable essential animations */
+    .hamburger, .hamburger *, 
+    .nav-menu, .nav-link,
+    .mobile-hero-content,
+    .btn:hover, .btn:focus,
+    .feature-badge:hover {
+        animation-duration: revert !important;
+        transition-duration: revert !important;
+    }
+    
+    /* Optimize scrolling performance */
+    .services-grid,
+    .portfolio-grid,
+    .about-features {
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+    
     /* Mobile Hero Content Styles */
     .mobile-hero-content {
         display: flex;
@@ -5718,6 +5853,67 @@ html, body {
     .portfolio-stats span {
         font-size: 0.9rem !important;
         padding: 0.6rem 1rem !important;
+    }
+    
+    /* Mobile Layout & Spacing Optimization */
+    .container {
+        max-width: 100% !important;
+        padding: 0 1rem !important;
+        margin: 0 auto !important;
+    }
+    
+    section {
+        padding: 2rem 0 !important;
+        margin: 0 !important;
+    }
+    
+    .section-title {
+        font-size: 2rem !important;
+        text-align: center !important;
+        margin-bottom: 2rem !important;
+        padding: 0 1rem !important;
+    }
+    
+    /* Mobile Button Optimization */
+    .btn {
+        width: 100% !important;
+        max-width: 320px !important;
+        margin: 0 auto 1rem auto !important;
+        padding: 1rem 2rem !important;
+        font-size: 1rem !important;
+        border-radius: var(--radius-lg) !important;
+        display: block !important;
+        text-align: center !important;
+    }
+    
+    .hero-buttons {
+        flex-direction: column !important;
+        gap: 1rem !important;
+        width: 100% !important;
+        align-items: center !important;
+    }
+    
+    /* Mobile Contact Form Optimization */
+    .contact-form {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100% !important;
+        padding: 1rem !important;
+        font-size: 16px !important;
+        border-radius: var(--radius-md) !important;
+        border: 2px solid rgba(0, 212, 170, 0.3) !important;
+        background: rgba(0, 212, 170, 0.05) !important;
+        color: var(--text-primary) !important;
+    }
+    
+    .form-group textarea {
+        min-height: 120px !important;
+        resize: vertical !important;
     }
     
     /* Enhanced touch optimization */
