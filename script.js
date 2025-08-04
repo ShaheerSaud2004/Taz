@@ -810,7 +810,7 @@ window.addEventListener('load', () => {
     loadingScreen.id = 'loading-screen';
     loadingScreen.innerHTML = `
         <div class="loading-content">
-            <div class="loading-logo">TreeScent Pro</div>
+            <div class="loading-logo">tINKer</div>
             <div class="loading-spinner"></div>
             <div class="loading-text">Loading your experience...</div>
         </div>
