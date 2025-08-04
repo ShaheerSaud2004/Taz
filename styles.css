@@ -240,9 +240,10 @@ body::before {
     background: var(--bg-gradient);
     display: flex;
     align-items: center;
-    padding-top: 80px;
+    padding-top: 60px;
     position: relative;
     overflow: hidden;
+    margin-top: -1rem;
 }
 
 .hero::before {
@@ -279,9 +280,9 @@ body::before {
     padding: 0 3rem;
     display: grid;
     grid-template-columns: 1.2fr 1fr;
-    gap: 8rem;
+    gap: 6rem;
     align-items: center;
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 60px);
     position: relative;
     z-index: 2;
 }
@@ -4151,33 +4152,34 @@ html, body {
     /* Hero section optimization */
     .hero {
         min-height: 100vh;
-        padding: 2rem 0;
+        padding: 1rem 0;
+        margin-top: -2rem;
     }
     
     .hero-container {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2rem;
         text-align: center;
-        padding: 2rem 0;
+        padding: 1rem 0;
     }
     
     .hero-title {
         font-size: 2.5rem;
         line-height: 1.2;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
     }
     
     .hero-description {
         font-size: 1.1rem;
         line-height: 1.6;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
         padding: 0 1rem;
     }
     
     .hero-stats {
         flex-direction: column;
-        gap: 1.5rem;
-        margin-bottom: 2.5rem;
+        gap: 1rem;
+        margin-bottom: 2rem;
     }
     
     .stat {
@@ -4633,7 +4635,8 @@ html, body {
 @media (max-width: 768px) and (orientation: landscape) {
     .hero {
         min-height: 100vh;
-        padding: 1rem 0;
+        padding: 0.5rem 0;
+        margin-top: -1rem;
     }
     
     .hero-container {
@@ -4962,7 +4965,7 @@ html, body {
     .services,
     .portfolio,
     .contact {
-        padding: 3rem 0;
+        padding: 2rem 0;
     }
     
     .section-title {
