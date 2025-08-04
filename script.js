@@ -834,13 +834,10 @@ function initHeroStatsEnhancements() {
 }
 
 // Enhanced loading animation for the page
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 1.2s ease';
-    
-    // Add loading screen
+document.addEventListener('DOMContentLoaded', () => {
+    // Create and show loading screen immediately
     const loadingScreen = document.createElement('div');
-    loadingScreen.id = 'loading-screen';
+    loadingScreen.className = 'loading-screen';
     loadingScreen.innerHTML = `
         <div class="loading-content">
             <div class="loading-logo">tINKer</div>
@@ -848,15 +845,58 @@ window.addEventListener('load', () => {
             <div class="loading-text">Loading your experience...</div>
         </div>
     `;
+    
+    // Add loading screen styles
+    loadingScreen.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(135deg, #0a0a0a 0%, #111111 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        overflow: hidden;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    `;
+    
     document.body.appendChild(loadingScreen);
     
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-        loadingScreen.style.opacity = '0';
+    // Hide body content initially
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.8s ease';
+    
+    // Wait for all resources to load
+    window.addEventListener('load', () => {
         setTimeout(() => {
-            loadingScreen.remove();
-        }, 500);
-    }, 800);
+            // Fade out loading screen
+            loadingScreen.style.opacity = '0';
+            document.body.style.opacity = '1';
+            
+            // Remove loading screen after fade
+            setTimeout(() => {
+                if (loadingScreen.parentNode) {
+                    loadingScreen.remove();
+                }
+            }, 500);
+        }, 600); // Show loading screen for at least 600ms
+    });
+    
+    // Fallback: remove loading screen after 5 seconds max
+    setTimeout(() => {
+        if (loadingScreen.parentNode) {
+            loadingScreen.style.opacity = '0';
+            document.body.style.opacity = '1';
+            setTimeout(() => {
+                if (loadingScreen.parentNode) {
+                    loadingScreen.remove();
+                }
+            }, 500);
+        }
+    }, 5000);
 });
 
 // Add smooth reveal animation for sections
