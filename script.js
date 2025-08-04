@@ -1,0 +1,764 @@
+// Mobile Menu Toggle
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+});
+
+// Close mobile menu when clicking on a link
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const offsetTop = target.offsetTop - 80; // Account for fixed navbar
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Enhanced navbar scroll effect
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+        navbar.style.backdropFilter = 'blur(20px)';
+        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
+    } else {
+        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+        navbar.style.backdropFilter = 'blur(20px)';
+        navbar.style.boxShadow = 'none';
+    }
+});
+
+// Intersection Observer for animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('animated');
+        }
+    });
+}, observerOptions);
+
+// Observe elements for animation
+document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll(
+        '.service-card, .portfolio-item, .about-feature, .contact-item, .stat'
+    );
+    
+    animatedElements.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        observer.observe(el);
+    });
+
+    // Initialize particle effects
+    initParticleEffects();
+    
+    // Initialize typewriter effect
+    initTypewriterEffect();
+});
+
+// Button interactions with enhanced effects
+document.querySelectorAll('.btn').forEach(button => {
+    button.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 8px 25px rgba(0, 212, 170, 0.3)';
+    });
+    
+    button.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '';
+    });
+    
+    // Handle button clicks
+    button.addEventListener('click', function(e) {
+        const buttonText = this.textContent.trim();
+        
+        if (buttonText === 'Start Your Project') {
+            e.preventDefault();
+            document.querySelector('#contact').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else if (buttonText === 'View Portfolio') {
+            e.preventDefault();
+            document.querySelector('#portfolio').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else if (buttonText === 'Get Free Quote') {
+            e.preventDefault();
+            handleFormSubmission();
+        } else if (buttonText === 'Get Quote') {
+            e.preventDefault();
+            document.querySelector('#contact').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Enhanced portfolio item hover effects
+document.querySelectorAll('.portfolio-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+        const productContainer = this.querySelector('.product-image-container');
+        const content = this.querySelector('.portfolio-content');
+        
+        if (productContainer) {
+            productContainer.style.transform = 'scale(1.3) rotateY(15deg)';
+            productContainer.style.transition = 'transform 0.3s ease';
+            productContainer.style.filter = 'drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4))';
+        }
+        
+        if (content) {
+            content.style.transform = 'translateY(-5px)';
+            content.style.transition = 'transform 0.3s ease';
+        }
+    });
+    
+    item.addEventListener('mouseleave', function() {
+        const productContainer = this.querySelector('.product-image-container');
+        const content = this.querySelector('.portfolio-content');
+        
+        if (productContainer) {
+            productContainer.style.transform = 'scale(1.2) rotateY(0deg)';
+            productContainer.style.filter = 'drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))';
+        }
+        
+        if (content) {
+            content.style.transform = 'translateY(0)';
+        }
+    });
+});
+
+// Enhanced hero product hover effects
+document.querySelectorAll('.tree-display').forEach(display => {
+    display.addEventListener('mouseenter', function() {
+        const productContainer = this.querySelector('.product-image-container');
+        
+        if (productContainer) {
+            productContainer.style.transform = 'scale(1.3)';
+            productContainer.style.transition = 'transform 0.3s ease';
+            productContainer.style.filter = 'drop-shadow(0 15px 30px rgba(0, 212, 170, 0.4))';
+        }
+    });
+    
+    display.addEventListener('mouseleave', function() {
+        const productContainer = this.querySelector('.product-image-container');
+        
+        if (productContainer) {
+            productContainer.style.transform = 'scale(1.2)';
+            productContainer.style.filter = 'drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))';
+        }
+    });
+});
+
+// Enhanced service card hover effects
+document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        const icon = this.querySelector('.service-icon');
+        const features = this.querySelectorAll('.service-features li');
+        
+        if (icon) {
+            icon.style.transform = 'scale(1.1) rotate(5deg)';
+            icon.style.transition = 'transform 0.3s ease';
+        }
+        
+        // Animate features list
+        features.forEach((feature, index) => {
+            feature.style.transform = 'translateX(5px)';
+            feature.style.transition = `transform 0.3s ease ${index * 0.1}s`;
+        });
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        const icon = this.querySelector('.service-icon');
+        const features = this.querySelectorAll('.service-features li');
+        
+        if (icon) {
+            icon.style.transform = 'scale(1) rotate(0deg)';
+        }
+        
+        features.forEach(feature => {
+            feature.style.transform = 'translateX(0)';
+        });
+    });
+});
+
+// Enhanced about feature hover effects
+document.querySelectorAll('.about-feature').forEach(feature => {
+    feature.addEventListener('mouseenter', function() {
+        const icon = this.querySelector('.feature-icon');
+        const title = this.querySelector('h4');
+        
+        if (icon) {
+            icon.style.transform = 'scale(1.1) rotate(10deg)';
+            icon.style.transition = 'transform 0.3s ease';
+        }
+        
+        if (title) {
+            title.style.color = 'var(--accent-primary)';
+            title.style.transition = 'color 0.3s ease';
+        }
+    });
+    
+    feature.addEventListener('mouseleave', function() {
+        const icon = this.querySelector('.feature-icon');
+        const title = this.querySelector('h4');
+        
+        if (icon) {
+            icon.style.transform = 'scale(1) rotate(0deg)';
+        }
+        
+        if (title) {
+            title.style.color = 'var(--text-primary)';
+        }
+    });
+});
+
+// Form handling with enhanced validation
+function handleFormSubmission() {
+    const form = document.querySelector('.contact-form');
+    const inputs = form.querySelectorAll('input, select, textarea');
+    let isValid = true;
+    
+    // Enhanced validation with visual feedback
+    inputs.forEach(input => {
+        if (input.hasAttribute('required') && !input.value.trim()) {
+            isValid = false;
+            input.style.borderColor = '#ff4757';
+            input.style.boxShadow = '0 0 0 3px rgba(255, 71, 87, 0.1)';
+            
+            // Add shake animation
+            input.style.animation = 'shake 0.5s ease-in-out';
+            setTimeout(() => {
+                input.style.animation = '';
+            }, 500);
+        } else {
+            input.style.borderColor = '';
+            input.style.boxShadow = '';
+        }
+    });
+    
+    if (isValid) {
+        showNotification('Thank you! We\'ll get back to you within 24 hours.', 'success');
+        // Reset form with animation
+        inputs.forEach(input => {
+            input.style.transform = 'scale(0.95)';
+            input.style.transition = 'transform 0.2s ease';
+            setTimeout(() => {
+                input.value = '';
+                input.style.transform = 'scale(1)';
+            }, 200);
+        });
+    } else {
+        showNotification('Please fill in all required fields.', 'error');
+    }
+}
+
+// Contact form submission
+document.querySelector('.contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    handleFormSubmission();
+});
+
+// Enhanced notification system
+function showNotification(message, type = 'info') {
+    // Remove existing notification
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
+    
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // Add enhanced styles
+    Object.assign(notification.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        background: type === 'success' ? 'linear-gradient(135deg, #00ff88, #00cc6a)' : 
+                   type === 'error' ? 'linear-gradient(135deg, #ff4757, #ff3742)' : 
+                   'linear-gradient(135deg, #00d4aa, #00b894)',
+        color: type === 'success' ? '#000' : '#fff',
+        padding: '16px 24px',
+        borderRadius: '12px',
+        fontSize: '14px',
+        fontWeight: '600',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+        zIndex: '10000',
+        opacity: '0',
+        transform: 'translateY(-20px) scale(0.9)',
+        transition: 'all 0.3s ease',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)'
+    });
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateY(0) scale(1)';
+    }, 10);
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateY(-20px) scale(0.9)';
+        setTimeout(() => notification.remove(), 300);
+    }, 4000);
+}
+
+// Particle effects for hero section
+function initParticleEffects() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.cssText = `
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+            animation: float-particle ${3 + Math.random() * 4}s ease-in-out infinite;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            animation-delay: ${Math.random() * 2}s;
+        `;
+        hero.appendChild(particle);
+    }
+}
+
+// Typewriter effect for hero title
+function initTypewriterEffect() {
+    const title = document.querySelector('.hero-title');
+    if (!title) return;
+    
+    const text = title.textContent;
+    title.textContent = '';
+    title.style.borderRight = '2px solid var(--accent-primary)';
+    
+    let i = 0;
+    const typeWriter = () => {
+        if (i < text.length) {
+            title.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 50);
+        } else {
+            title.style.borderRight = 'none';
+        }
+    };
+    
+    // Start typing after a short delay
+    setTimeout(typeWriter, 500);
+}
+
+// Parallax effect for floating elements
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const floatingItems = document.querySelectorAll('.floating-item');
+    const particles = document.querySelectorAll('.particle');
+    
+    floatingItems.forEach((item, index) => {
+        const speed = 0.5 + (index * 0.1);
+        const yPos = -(scrolled * speed);
+        item.style.transform = `translateY(${yPos}px)`;
+    });
+    
+    particles.forEach((particle, index) => {
+        const speed = 0.3 + (index * 0.05);
+        const yPos = -(scrolled * speed);
+        particle.style.transform = `translateY(${yPos}px)`;
+    });
+});
+
+// Add CSS for enhanced animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes float {
+        0%, 100% {
+            transform: scale(1.2) translateY(0px);
+        }
+        50% {
+            transform: scale(1.2) translateY(-10px);
+        }
+    }
+    
+    @keyframes float-particle {
+        0%, 100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.3;
+        }
+        50% {
+            transform: translateY(-20px) translateX(10px);
+            opacity: 0.6;
+        }
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    
+    .tree-freshener {
+        transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    
+    .portfolio-item:hover .tree-freshener {
+        filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+    }
+    
+    .service-icon {
+        transition: transform 0.3s ease;
+    }
+    
+    .floating-item {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .tree-display {
+        animation: float 4s ease-in-out infinite;
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .service-card,
+    .portfolio-item,
+    .about-feature {
+        animation: slideIn 0.6s ease-out;
+    }
+    
+    .animated {
+        animation: slideIn 0.6s ease-out;
+    }
+    
+    .particle {
+        z-index: 1;
+    }
+    
+    /* Enhanced hover effects */
+    .nav-link:hover {
+        transform: translateY(-2px);
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    /* Smooth transitions for all interactive elements */
+    * {
+        transition: all 0.3s ease;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: var(--accent-primary);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-secondary);
+    }
+`;
+document.head.appendChild(style);
+
+// Continuous scrolling carousel functionality
+let carouselPosition = 0;
+let carouselSpeed = 0.8; // pixels per frame - adjust this to control speed
+let animationId;
+const slides = document.querySelectorAll('.service-card');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = slides.length;
+
+function startContinuousCarousel() {
+    function animate() {
+        carouselPosition -= carouselSpeed;
+        
+        // Calculate which slide should be active based on position
+        const slideWidth = slides[0].offsetWidth + 32; // Include gap
+        const currentSlideIndex = Math.abs(Math.round(carouselPosition / slideWidth)) % totalSlides;
+        
+        // Update carousel position
+        const servicesGrid = document.querySelector('.services-grid');
+        if (servicesGrid) {
+            servicesGrid.style.transform = `translateX(${carouselPosition}px)`;
+        }
+        
+        // Update active states
+        updateActiveStates(currentSlideIndex);
+        
+        // Reset position when it goes too far left to create infinite loop
+        if (carouselPosition < -(slideWidth * totalSlides)) {
+            carouselPosition = 0;
+        }
+        
+        animationId = requestAnimationFrame(animate);
+    }
+    
+    animate();
+}
+
+function updateActiveStates(index) {
+    // Remove active class from all slides and dots
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Add active class to current slide and dot
+    if (slides[index]) slides[index].classList.add('active');
+    if (dots[index]) dots[index].classList.add('active');
+    
+    // Update progress bar
+    updateProgressBar(index);
+}
+
+function updateProgressBar(index) {
+    const progressBar = document.getElementById('carousel-progress');
+    if (progressBar) {
+        const progress = ((index + 1) / totalSlides) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+}
+
+function stopContinuousCarousel() {
+    if (animationId) {
+        cancelAnimationFrame(animationId);
+    }
+}
+
+// Manual navigation functions (for buttons and dots)
+function moveCarousel(direction) {
+    const slideWidth = slides[0].offsetWidth + 32;
+    carouselPosition -= direction * slideWidth;
+    
+    // Update active states immediately
+    const currentSlideIndex = Math.abs(Math.round(carouselPosition / slideWidth)) % totalSlides;
+    updateActiveStates(currentSlideIndex);
+}
+
+function currentSlide(slideIndex) {
+    const slideWidth = slides[0].offsetWidth + 32;
+    carouselPosition = -(slideIndex - 1) * slideWidth;
+    
+    // Update active states immediately
+    updateActiveStates(slideIndex - 1);
+}
+
+// Initialize carousel when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Start continuous carousel
+    startContinuousCarousel();
+    
+    // Pause continuous carousel on hover and focus
+    const servicesCarousel = document.querySelector('.services-carousel');
+    if (servicesCarousel) {
+        servicesCarousel.addEventListener('mouseenter', stopContinuousCarousel);
+        servicesCarousel.addEventListener('mouseleave', startContinuousCarousel);
+        servicesCarousel.addEventListener('focusin', stopContinuousCarousel);
+        servicesCarousel.addEventListener('focusout', startContinuousCarousel);
+    }
+    
+    // Add touch/swipe support for mobile
+    let startX = 0;
+    let endX = 0;
+    
+    servicesCarousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    });
+    
+    servicesCarousel.addEventListener('touchend', (e) => {
+        endX = e.changedTouches[0].clientX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next slide
+                moveCarousel(1);
+            } else {
+                // Swipe right - previous slide
+                moveCarousel(-1);
+            }
+        }
+    }
+    
+    // Add accessibility features
+    const carouselButtons = document.querySelectorAll('.carousel-btn');
+    carouselButtons.forEach(button => {
+        button.setAttribute('aria-label', button.classList.contains('prev-btn') ? 'Previous slide' : 'Next slide');
+        button.setAttribute('tabindex', '0');
+    });
+    
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, index) => {
+        dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+        dot.setAttribute('tabindex', '0');
+    });
+    
+    // Initialize progress bar
+    updateProgressBar(0);
+});
+
+// Loading animation for the page
+window.addEventListener('load', () => {
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.8s ease';
+    
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+    }, 100);
+});
+
+// Add smooth reveal animation for sections
+const revealSections = document.querySelectorAll('section');
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+});
+
+revealSections.forEach(section => {
+    revealObserver.observe(section);
+});
+
+// Add cursor trail effect
+let mouseX = 0, mouseY = 0;
+let cursorTrail = [];
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    // Create cursor trail effect
+    if (cursorTrail.length > 5) {
+        cursorTrail.shift();
+    }
+    
+    cursorTrail.push({ x: mouseX, y: mouseY });
+    
+    // Update existing trail elements or create new ones
+    cursorTrail.forEach((pos, index) => {
+        let trailElement = document.getElementById(`trail-${index}`);
+        if (!trailElement) {
+            trailElement = document.createElement('div');
+            trailElement.id = `trail-${index}`;
+            trailElement.style.cssText = `
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: var(--accent-primary);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                opacity: ${0.3 - (index * 0.05)};
+                transition: all 0.1s ease;
+            `;
+            document.body.appendChild(trailElement);
+        }
+        
+        trailElement.style.left = pos.x + 'px';
+        trailElement.style.top = pos.y + 'px';
+    });
+});
+
+// Add keyboard navigation support
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        // Close mobile menu
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+    
+    // Carousel keyboard navigation
+    if (e.key === 'ArrowLeft') {
+        moveCarousel(-1);
+    } else if (e.key === 'ArrowRight') {
+        moveCarousel(1);
+    }
+});
+
+// Add performance optimization
+let ticking = false;
+
+function updateParallax() {
+    const scrolled = window.pageYOffset;
+    const floatingItems = document.querySelectorAll('.floating-item');
+    
+    floatingItems.forEach((item, index) => {
+        const speed = 0.5 + (index * 0.1);
+        const yPos = -(scrolled * speed);
+        item.style.transform = `translateY(${yPos}px)`;
+    });
+    
+    ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+    }
+}); 
