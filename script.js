@@ -568,10 +568,25 @@ document.head.appendChild(style);
 
 // Continuous scrolling carousel functionality
 let carouselPosition = 0;
-let carouselSpeed = 0.8; // pixels per frame - adjust this to control speed
+let carouselSpeed = 0.5; // pixels per frame - slower speed for smoother movement
 let animationId;
-const slides = document.querySelectorAll('.service-card');
-const totalSlides = slides.length;
+let slides = document.querySelectorAll('.service-card');
+let totalSlides = slides.length;
+
+function setupInfiniteCarousel() {
+    const servicesGrid = document.querySelector('.services-grid');
+    if (!servicesGrid) return;
+    
+    // Clone the slides for infinite loop
+    slides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        servicesGrid.appendChild(clone);
+    });
+    
+    // Update slides reference to include clones
+    slides = document.querySelectorAll('.service-card');
+    totalSlides = slides.length / 2; // Original number of slides
+}
 
 function startContinuousCarousel() {
     function animate() {
@@ -590,7 +605,7 @@ function startContinuousCarousel() {
         // Update active states
         updateActiveStates(currentSlideIndex);
         
-        // Reset position when it goes too far left to create infinite loop
+        // Reset position when it goes too far left to create seamless infinite loop
         if (carouselPosition < -(slideWidth * totalSlides)) {
             carouselPosition = 0;
         }
@@ -617,6 +632,9 @@ function stopContinuousCarousel() {
 
 // Initialize carousel when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Setup infinite carousel with cloned slides
+    setupInfiniteCarousel();
+    
     // Start continuous carousel
     startContinuousCarousel();
     
@@ -626,7 +644,161 @@ document.addEventListener('DOMContentLoaded', () => {
         servicesCarousel.addEventListener('mouseenter', stopContinuousCarousel);
         servicesCarousel.addEventListener('mouseleave', startContinuousCarousel);
     }
+    
+    // Enhanced portfolio interactions
+    initPortfolioEnhancements();
+    
+    // Enhanced contact form interactions
+    initContactFormEnhancements();
+    
+    // Enhanced hero stats interactions
+    initHeroStatsEnhancements();
 });
+
+// Enhanced portfolio functionality
+function initPortfolioEnhancements() {
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    portfolioItems.forEach((item, index) => {
+        // Add staggered animation delay
+        item.style.animationDelay = `${index * 0.2}s`;
+        
+        // Add click interaction
+        item.addEventListener('click', () => {
+            // Remove active class from all items
+            portfolioItems.forEach(i => i.classList.remove('active'));
+            // Add active class to clicked item
+            item.classList.add('active');
+            
+            // Add a subtle pulse effect
+            item.style.animation = 'portfolioCardPulse 0.6s ease-in-out';
+            setTimeout(() => {
+                item.style.animation = 'portfolioCardFloat 6s ease-in-out infinite';
+            }, 600);
+        });
+        
+        // Add hover sound effect (optional)
+        item.addEventListener('mouseenter', () => {
+            item.style.transform = 'translateY(-12px) scale(1.02)';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Add CSS animation for pulse effect
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes portfolioCardPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Enhanced contact form functionality
+function initContactFormEnhancements() {
+    const form = document.querySelector('.contact-form');
+    const inputs = form.querySelectorAll('input, select, textarea');
+    const submitBtn = form.querySelector('.btn-primary');
+    
+    // Add floating label effect
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', () => {
+            if (!input.value) {
+                input.parentElement.classList.remove('focused');
+            }
+        });
+        
+        // Add input validation feedback
+        input.addEventListener('input', () => {
+            if (input.value) {
+                input.classList.add('has-value');
+            } else {
+                input.classList.remove('has-value');
+            }
+        });
+    });
+    
+    // Enhanced submit button interaction
+    if (submitBtn) {
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Add loading state
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.innerHTML = '✓ Message Sent!';
+                submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    submitBtn.innerHTML = 'Get Free Quote';
+                    submitBtn.style.background = 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))';
+                    submitBtn.disabled = false;
+                }, 3000);
+            }, 2000);
+        });
+    }
+    
+    // Add form glow effect on interaction
+    form.addEventListener('mouseenter', () => {
+        form.style.boxShadow = '0 25px 50px rgba(0, 212, 170, 0.2)';
+    });
+    
+    form.addEventListener('mouseleave', () => {
+        form.style.boxShadow = 'var(--shadow-large)';
+    });
+}
+
+// Enhanced hero stats functionality
+function initHeroStatsEnhancements() {
+    const stats = document.querySelectorAll('.stat');
+    
+    // Add staggered animation delay
+    stats.forEach((stat, index) => {
+        stat.style.animationDelay = `${index * 0.2}s`;
+        
+        // Add click interaction
+        stat.addEventListener('click', () => {
+            // Add a pulse effect
+            stat.style.animation = 'statPulse 0.6s ease-in-out';
+            setTimeout(() => {
+                stat.style.animation = 'statFloat 6s ease-in-out infinite';
+            }, 600);
+        });
+        
+        // Add hover sound effect (optional)
+        stat.addEventListener('mouseenter', () => {
+            stat.style.transform = 'translateY(-12px) scale(1.05)';
+        });
+        
+        stat.addEventListener('mouseleave', () => {
+            stat.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Add CSS animation for pulse effect
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes statPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
+}
 
 // Enhanced loading animation for the page
 window.addEventListener('load', () => {
